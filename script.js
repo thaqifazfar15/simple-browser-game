@@ -3,17 +3,16 @@ const ctx = canvas.getContext('2d');
 
 
 // draw black canvas
-ctx.fillStyle = 'black'; // Set fill color
+ctx.fillStyle = 'darkSlateGray'; // Set fill color
 ctx.fillRect(0, 0, 600, 400); // Draw a filled rectangle (x, y, width, height)
 
 
 // begin drawing windows seat
 ctx.beginPath();
 ctx.strokeStyle = "white"
-// Set start-point
+
 ctx.moveTo(50, 350); // (x , y)
 ctx.fillStyle = "white"
-// Set sub-points
 ctx.lineTo(550, 350);
 ctx.lineTo(550, 50);
 ctx.lineTo(550, 50);
