@@ -35,17 +35,3 @@ document.addEventListener('mousemove', (e) => {
   box.style.top = (e.pageY - boxHeight / 2) + 'px';
 });
 }
-
-
-const ctx = canvas.getContext('2d')
-const img = new Image()
-img.src = "tree.jpg"
-
-const imgX = 200;
-const imgY = 150;
-const imgWidth = 100;
-const imgHeight = 100;
-
-img.onload = () => {
-  ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
-};
