@@ -3,9 +3,10 @@
     margin:0px;
 }
 
-canvas {
-    border: 2px solid grey;
-}
+/* canvas {
+    /* border: 2px solid grey;
+} 
+*/
 
 
 html, body {
@@ -18,6 +19,6 @@ html, body {
 }
 
 #myCanvas {
-    border: 2px solid black;
+    /* border: 2px solid black; */
     margin: 50px;
 }
