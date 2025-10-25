@@ -1,0 +1,11 @@
+1. POV in a oving car while holding a camera
+2. Each object taken by the camera has points that awards or deducts
+3. Goal is to get the highest score
+
+Award points:
+    - Bird = 1
+    - Tree = 2
+    - House = 2
+    - Hotel = 3
+    - Landmark = 4
+    - FreeToBook employee = 10
