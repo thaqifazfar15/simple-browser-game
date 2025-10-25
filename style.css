@@ -1,13 +1,3 @@
-* {
-    padding: 0px;
-    margin:0px;
-}
-
-canvas {
-    border: 2px solid grey;
-}
-
-
 html, body {
     height: 100vh;
     width: 100vw;
