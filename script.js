@@ -39,11 +39,10 @@ ctx.ellipse(
 ctx.stroke();
 ctx.closePath();
 
-gifler('img/pixil-gif-drawing-3.gif').get(function(anim) {
-   anim.animate(ctx, {
-      x: 400,       // X position inside canvas
-      y: 250,       // Y position inside canvas
-      width: 100,   // Width of GIF
-      height: 100   // Height of GIF
-    });
-  });
+// gifler('img/pixil-gif-drawing-3.gif').get((anim) => {
+//   anim.onDrawFrame = (ctx, frame) => {
+//     ctx.drawImage(frame.buffer, 400, 250, 100, 100); // custom position/size
+//   };
+//   anim.animateInCanvas(canvas);
+// });
+
