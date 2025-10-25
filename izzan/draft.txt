@@ -1,0 +1,8 @@
+Ideas:
+
+1. Capturing image
+    - Points gathered by elements obtained in the picture
+    - Certain rules that dictate what deducts the points
+    - 
+
+2. 
