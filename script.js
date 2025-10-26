@@ -199,3 +199,23 @@ canvas.addEventListener('click', function(event) {
 
 animate();
 startSpawning();
+
+{
+
+const box = document.createElement('div');
+box.style.width = '40px';
+box.style.height = '40px';
+box.style.border = '2px solid black';
+box.style.position = 'absolute';
+box.style.pointerEvents = 'none';
+document.body.appendChild(box);
+
+
+document.addEventListener('mousemove', (e) => {
+  const boxWidth = 40;
+  const boxHeight = 40;
+
+  box.style.left = (e.pageX - boxWidth / 2) + 'px';
+  box.style.top = (e.pageY - boxHeight / 2) + 'px';
+});
+}
