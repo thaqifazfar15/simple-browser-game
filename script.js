@@ -125,7 +125,14 @@ function animate() {
       document.getElementById('missDisplay').innerText = 3 - missCounter;
       if (missCounter >= 3) {
         gameOver = true;
-        alert("Game Over! You missed 3 images.");
+        const sound_d = new Audio("game_fail.mp3");
+        sound_d.play();
+        var delayInMilliseconds = 1000; //1 second
+
+        setTimeout(function() {
+          alert("Game Over! You missed 3 images.");
+        }, delayInMilliseconds);
+        
       }
       return false;
     }
