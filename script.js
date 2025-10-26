@@ -196,9 +196,12 @@ canvas.addEventListener('click', function(event) {
   });
     document.getElementById('scoreDisplay').innerText = totalScore;
 });
-
 animate();
-startSpawning();
+document.getElementById("playButton").onclick = function() {
+    startSpawning();
+  }
+
+
 
 {
 
