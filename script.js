@@ -159,6 +159,7 @@ function spawnImage(speed) {
   activeImages.push(newImg);
 }
 
+
 // Staggered spawner
 function startSpawning() {
   function scheduleNextSpawn() {
