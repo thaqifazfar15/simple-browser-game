@@ -1,52 +1,64 @@
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
 
-// draw black canvas
-ctx.fillStyle = 'darkSlateGray'; // Set fill color
-ctx.fillRect(0, 0, 600, 400); // Draw a filled rectangle (x, y, width, height)
+// Image sources
+const imageSources = [
+  'img/landmark-1.png',
+  'img/landmark-2.png',
+  'img/landmark-3.png'
+];
 
+let activeImages = [];
+let velocity = 1;
+let totalScore = 0;
+let missCounter = 0;
+let gameOver = false;
 
-// begin drawing windows seat
-ctx.beginPath();
-ctx.strokeStyle = "white"
-ctx.moveTo(50, 350); // (x , y)
-ctx.fillStyle = "white"
-ctx.lineTo(550, 350);
-ctx.lineTo(550, 50);
-ctx.lineTo(550, 50);
-ctx.quadraticCurveTo(150, 40, 50, 250);
-ctx.lineTo(50, 350); 
-ctx.fill()
-ctx.stroke();
-ctx.closePath()
+// Image class
+class MovingImage {
+  constructor(src, x, y, width, height, speed) {
+    this.img = new Image();
+    this.img.src = src;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+    this.clicked = false;
+  }
 
-ctx.fillStyle = "darkSlateGray";
-ctx.fillRect(80, 355, 10, -15); 
+  update() {
+    this.x -= this.speed;
+  }
 
-ctx.beginPath();
-ctx.strokeStyle = 'black';
-ctx.lineWidth = 8;
+  draw() {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
 
-// Draw an elliptical arc
-ctx.ellipse(
-  320, 45,    
-  40, 10,       
-  -0.15,            
-  Math.PI,  
-  0   
-);
-ctx.stroke();
-ctx.closePath();
+  isOffScreen() {
+    return this.x + this.width < 0;
+  }
 
-const clockTower = new Image();
-clockTower.src = 'img/pixil-frame-0-6.png'; // Replace with your image URL
+  wasClicked(clickX, clickY) {
+    return (
+      !this.clicked &&
+      clickX >= this.x &&
+      clickX <= this.x + this.width &&
+      clickY >= this.y &&
+      clickY <= this.y + this.height
+    );
+  }
+}
 
-// Draw image after it loads
-clockTower.onload = function() {
-    ctx.drawImage(clockTower, 50, 50, 200, 150); // x, y, width, height
-};
+// Draw window seat
+function drawWindowSeat() {
+  ctx.fillStyle = "darkSlateGray";
+  ctx.fillRect(80, 355, 10, -15);
 
+<<<<<<< HEAD
 const coordsDisplay = document.getElementById('coords');
 canvas.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
@@ -68,3 +80,149 @@ canvas.addEventListener('mousemove', (e) => {
       ctx.arc(x, y, 5, 0, Math.PI * 2);
       ctx.fill();
     });
+=======
+  ctx.beginPath();
+  ctx.strokeStyle = "white";
+  ctx.fillStyle = "white";
+  ctx.moveTo(50, 350);
+  ctx.lineTo(550, 350);
+  ctx.lineTo(550, 50);
+  ctx.quadraticCurveTo(150, 40, 50, 250);
+  ctx.lineTo(50, 350);
+  ctx.fill();
+  ctx.stroke();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 8;
+  ctx.ellipse(320, 45, 40, 10, -0.15, Math.PI, 0);
+  ctx.stroke();
+  ctx.closePath();
+}
+
+// Grass setup
+const grassImg = new Image();
+grassImg.src = 'img/grass.png';
+
+let grassX1 = 0;
+let grassX2 = canvasWidth;
+const grassY = canvasHeight - 100;
+let grassSpeed = velocity;
+
+function drawMovingGrass(velocity) {
+  ctx.drawImage(grassImg, grassX1, grassY, canvasWidth, 50);
+  ctx.drawImage(grassImg, grassX2, grassY, canvasWidth, 50);
+
+  grassX1 -= velocity;
+  grassX2 -= velocity;
+
+  if (grassX1 + canvasWidth <= 0) {
+    grassX1 = grassX2 + canvasWidth;
+  }
+  if (grassX2 + canvasWidth <= 0) {
+    grassX2 = grassX1 + canvasWidth;
+  }
+}
+
+// Animation loop
+function animate() {
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  ctx.fillStyle = 'darkSlateGray';
+  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(50, 350);
+  ctx.lineTo(550, 350);
+  ctx.lineTo(550, 50);
+  ctx.quadraticCurveTo(150, 40, 50, 250);
+  ctx.lineTo(50, 350);
+  ctx.closePath();
+  ctx.clip();
+
+  // Remove off-screen images and count misses
+  activeImages = activeImages.filter(img => {
+    if (img.isOffScreen() && !img.clicked) {
+      missCounter++;
+      console.log("Missed! Total misses:", missCounter);
+      document.getElementById('missDisplay').innerText = 3 - missCounter;
+      if (missCounter >= 3) {
+        gameOver = true;
+        alert("Game Over! You missed 3 images.");
+      }
+      return false;
+    }
+    return !img.isOffScreen();
+  });
+
+  drawWindowSeat();
+  drawMovingGrass(velocity);
+
+  activeImages.forEach((imgObj) => {
+    imgObj.update();
+    imgObj.draw();
+  });
+
+  ctx.restore();
+
+  if (!gameOver) {
+    requestAnimationFrame(animate);
+  }
+}
+
+// Spawn one image if under limit
+function spawnImage(speed) {
+  if (gameOver || activeImages.length >= 3) return;
+
+  const src = imageSources[Math.floor(Math.random() * imageSources.length)];
+  const y = Math.random() * (canvasHeight - 200); // lowered max height
+  const newImg = new MovingImage(src, canvasWidth, y, 100, 75, speed);
+  activeImages.push(newImg);
+}
+
+// Staggered spawner
+function startSpawning() {
+  function scheduleNextSpawn() {
+    if (gameOver) return;
+
+    spawnImage(velocity);
+
+    // More random spawn timing
+    const baseDelay = 1000 + Math.random() * 500;
+    const delay = baseDelay / velocity + Math.random() * 700;
+
+    setTimeout(scheduleNextSpawn, delay);
+  }
+
+  scheduleNextSpawn();
+}
+
+// Handle clicks
+canvas.addEventListener('click', function(event) {
+  if (gameOver) return;
+
+    const sound = new Audio("click-sound.mp3");
+    sound.play();
+  const rect = canvas.getBoundingClientRect();
+  const clickX = event.clientX - rect.left;
+  const clickY = event.clientY - rect.top;
+
+  activeImages.forEach((imgObj) => {
+    if (imgObj.wasClicked(clickX, clickY)) {
+      imgObj.clicked = true;
+      totalScore += 100;
+
+      if (totalScore % 1000 === 0) {
+        velocity += 1;
+      }
+    }
+  });
+    document.getElementById('scoreDisplay').innerText = totalScore;
+});
+
+// Start game
+animate();
+startSpawning();
+>>>>>>> 24c211f2cd43c1705d5ae392592bc3c6ec342f3d
