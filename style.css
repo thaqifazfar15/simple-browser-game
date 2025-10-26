@@ -11,3 +11,8 @@ html, body {
     /* border: 2px solid black; */
     margin: 50px;
 }
+
+#coords {
+      font-family: monospace;
+      margin-bottom: 10px;
+}

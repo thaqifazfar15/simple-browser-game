@@ -39,11 +39,32 @@ ctx.ellipse(
 ctx.stroke();
 ctx.closePath();
 
-const img = new Image();
-img.src = 'img/pixil-frame-0-6.png'; // Replace with your image URL
+const clockTower = new Image();
+clockTower.src = 'img/pixil-frame-0-6.png'; // Replace with your image URL
 
 // Draw image after it loads
-img.onload = function() {
-    ctx.drawImage(img, 50, 50, 200, 150); // x, y, width, height
+clockTower.onload = function() {
+    ctx.drawImage(clockTower, 50, 50, 200, 150); // x, y, width, height
 };
 
+const coordsDisplay = document.getElementById('coords');
+canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      coordsDisplay.textContent = `x: ${x}, y: ${y}`;
+    });
+
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      console.log(`Clicked at: x=${x}, y=${y}`);
+
+      ctx.fillStyle = 'red';
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, Math.PI * 2);
+      ctx.fill();
+    });

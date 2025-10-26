@@ -35,3 +35,4 @@ document.addEventListener('mousemove', (e) => {
   box.style.top = (e.pageY - boxHeight / 2) + 'px';
 });
 }
+canvas.get
