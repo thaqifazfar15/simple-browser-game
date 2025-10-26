@@ -58,29 +58,6 @@ function drawWindowSeat() {
   ctx.fillStyle = "darkSlateGray";
   ctx.fillRect(80, 355, 10, -15);
 
-<<<<<<< HEAD
-const coordsDisplay = document.getElementById('coords');
-canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      coordsDisplay.textContent = `x: ${x}, y: ${y}`;
-    });
-
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      console.log(`Clicked at: x=${x}, y=${y}`);
-
-      ctx.fillStyle = 'red';
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-=======
   ctx.beginPath();
   ctx.strokeStyle = "white";
   ctx.fillStyle = "white";
@@ -226,4 +203,3 @@ canvas.addEventListener('click', function(event) {
 // Start game
 animate();
 startSpawning();
->>>>>>> 24c211f2cd43c1705d5ae392592bc3c6ec342f3d
