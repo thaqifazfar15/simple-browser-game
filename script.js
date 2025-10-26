@@ -4,7 +4,6 @@ const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 
-// Image sources
 const imageSources = [
   'img/landmark-1.png',
   'img/landmark-2.png',
@@ -21,7 +20,6 @@ let totalScore = 0;
 let missCounter = 0;
 let gameOver = false;
 
-// Image class
 class MovingImage {
   constructor(src, x, y, width, height, speed) {
     this.img = new Image();
@@ -57,7 +55,6 @@ class MovingImage {
   }
 }
 
-// Draw window seat
 function drawWindowSeat() {
   ctx.fillStyle = "darkSlateGray";
   ctx.fillRect(80, 355, 10, -15);
@@ -82,7 +79,6 @@ function drawWindowSeat() {
   ctx.closePath();
 }
 
-// Grass setup
 const grassImg = new Image();
 grassImg.src = 'img/grass.png';
 
@@ -106,7 +102,6 @@ function drawMovingGrass(velocity) {
   }
 }
 
-// Animation loop
 function animate() {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -123,7 +118,6 @@ function animate() {
   ctx.closePath();
   ctx.clip();
 
-  // Remove off-screen images and count misses
   activeImages = activeImages.filter(img => {
     if (img.isOffScreen() && !img.clicked) {
       missCounter++;
@@ -153,7 +147,6 @@ function animate() {
   }
 }
 
-// Spawn one image if under limit
 function spawnImage(speed) {
   if (gameOver || activeImages.length >= 3) return;
 
@@ -164,14 +157,12 @@ function spawnImage(speed) {
 }
 
 
-// Staggered spawner
 function startSpawning() {
-  function scheduleNextSpawn() {
+  function scheduleNextSpawn() {  
     if (gameOver) return;
 
     spawnImage(velocity);
 
-    // More random spawn timing
     const baseDelay = 1000 + Math.random() * 500;
     const delay = baseDelay / velocity + Math.random() * 700;
 
@@ -181,7 +172,7 @@ function startSpawning() {
   scheduleNextSpawn();
 }
 
-// Handle clicks
+
 canvas.addEventListener('click', function(event) {
   if (gameOver) return;
 
@@ -197,6 +188,8 @@ canvas.addEventListener('click', function(event) {
       totalScore += 100;
 
       if (totalScore % 1000 === 0) {
+        const sound_t = new Audio("thousand_sound_score.wav");
+        sound_t.play();
         velocity += 1;
       }
     }
@@ -204,6 +197,5 @@ canvas.addEventListener('click', function(event) {
     document.getElementById('scoreDisplay').innerText = totalScore;
 });
 
-// Start game
 animate();
 startSpawning();
