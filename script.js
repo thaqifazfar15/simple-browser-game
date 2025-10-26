@@ -16,7 +16,7 @@ const imageSources = [
 ];
 
 let activeImages = [];
-let velocity = 1;
+let velocity = 1.5;
 let totalScore = 0;
 let missCounter = 0;
 let gameOver = false;
