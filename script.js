@@ -158,7 +158,7 @@ function spawnImage(speed) {
   if (gameOver || activeImages.length >= 3) return;
 
   const src = imageSources[Math.floor(Math.random() * imageSources.length)];
-  const y = Math.random() * (canvasHeight - 200); // lowered max height
+  let y = Math.floor(Math.random() * 200) + 50
   const newImg = new MovingImage(src, canvasWidth, y, 100, 75, speed);
   activeImages.push(newImg);
 }
