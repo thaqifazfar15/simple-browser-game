@@ -7,7 +7,11 @@ const canvasHeight = canvas.height;
 const imageSources = [
   'img/landmark-1.png',
   'img/landmark-2.png',
-  'img/landmark-3.png'
+  'img/landmark-3.png',
+  'img/normal_house.jpg',
+  'img/normal_tree.jpg',
+  'img/pixil-gif-drawing-3.gif',
+
 ];
 
 let activeImages = [];
